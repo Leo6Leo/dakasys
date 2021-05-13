@@ -13,7 +13,7 @@
 <h1>最强三小只的Summer打卡计划</h1>
 
  <?php
-    $con=mysql_connect("localhost","dakasys","4PEF724hAyR36iDC");  
+ $con=mysql_connect("localhost","dakasys","4PEF724hAyR36iDC"); 
     mysql_query("set names 'utf8'");
 
     
@@ -23,9 +23,29 @@
     $subdate=date("Y-m-d");
     echo "<h1><i class='bi bi-calendar-date'></i> 今天是（加拿大时间）:".date("Y-m-d")."</h1>";   
 
+
+    $result_task=mysql_query("select * from tasks where subdate ='{$subdate}'"); 
+     while ($row=mysql_fetch_array($result_task)) {  
+        $task=$row["task"];
+    }  
  ?>
 
  <h1><i class="bi bi-speedometer2"></i>今天的任务是：</h1>
+ <script>
+    function getContent(){
+        document.getElementById("my-textarea").value = document.getElementById("my-content").innerHTML;
+    }
+</script>
+
+
+<div id="my-content" contenteditable="true"><?php echo $task; ?></div>
+
+<form action="changetask.php" method="post" onsubmit="return getContent()">
+    <textarea id="my-textarea" name="task" style="display:none"></textarea>
+    <input type="submit" value="更新任务" />
+</form>
+
+
 
  <div class="alert alert-success" role="alert">
 
